@@ -8,10 +8,12 @@ from PIL import Image
 
 
 class VideoReader(Dataset):
-    def __init__(self, path, transform=None):
+    def __init__(self, path, transform=None, vertical_shoot=False):
         self.video = pims.PyAVVideoReader(path)
         self.rate = self.video.frame_rate
         self.transform = transform
+        self.vertical_shoot = vertical_shoot
+        print(self.vertical_shoot)
         
     @property
     def frame_rate(self):
@@ -23,6 +25,17 @@ class VideoReader(Dataset):
     def __getitem__(self, idx):
         frame = self.video[idx]
         frame = Image.fromarray(np.asarray(frame))
+        # import matplotlib.pyplot as plt
+        # plt.imshow(frame)
+        # plt.show()
+        if self.vertical_shoot:
+            # Rotate vertical shots without meta
+            w, h = frame.size
+            if(w > h):
+                frame = frame.rotate(270,expand=True)
+        # import matplotlib.pyplot as plt
+        # plt.imshow(frame)
+        # plt.show()
         if self.transform is not None:
             frame = self.transform(frame)
         return frame
