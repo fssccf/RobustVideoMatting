@@ -155,7 +155,10 @@ def auto_downsample_ratio(h, w):
     """
     Automatically find a downsample ratio so that the largest side of the resolution be 512px.
     """
-    return min(512 / max(h, w), 1)
+    #ratio = min(512 / max(h, w), 1)
+    ratio = min(768 / max(h, w), 1)
+    print("auto_downsample_ratio =", ratio,h,w)
+    return ratio
 
 
 class Converter:
