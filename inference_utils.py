@@ -13,7 +13,6 @@ class VideoReader(Dataset):
         self.rate = self.video.frame_rate
         self.transform = transform
         self.vertical_shoot = vertical_shoot
-        print(self.vertical_shoot)
         
     @property
     def frame_rate(self):
@@ -33,6 +32,7 @@ class VideoReader(Dataset):
             w, h = frame.size
             if(w > h):
                 frame = frame.rotate(270,expand=True)
+                #frame = frame.rotate(90,expand=True)
         # import matplotlib.pyplot as plt
         # plt.imshow(frame)
         # plt.show()
